@@ -13,7 +13,7 @@ app.use(express.static('public'))
 app.set("view engine", "ejs")
 
 app.get("/", function(req, res){
-    res.render("home")
+    res.render("home", {posts: posts})
 })
 
 app.get("/about", function(req, res) {
@@ -29,7 +29,12 @@ app.get("/compose", function(req, res){
 })
 
 app.post("/compose", function(req, res){
-    console.log(req.body.blogTitle)
+    blog = {
+        title: req.body.blogTitle,
+        content: req.body.blogContent
+    }
+    posts.push(blog)
+    res.redirect("/")
 })
 
 app.listen(3000, function() {
