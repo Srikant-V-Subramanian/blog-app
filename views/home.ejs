@@ -2,11 +2,11 @@
 <div class="container-fluid">
     <h1>HOME</h1>
     <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Cumque maiores saepe sit facilis vel accusantium rem ratione aspernatur, officia explicabo nemo eveniet maxime consequatur odio fugit amet! Assumenda aut blanditiis accusamus voluptatum impedit fugiat, libero inventore amet deleniti corrupti, culpa provident quisquam fugit. Harum, reiciendis! Tenetur a laboriosam est accusamus eligendi dolores ad quaerat praesentium tempora architecto nobis dignissimos velit perspiciatis officiis sint provident facilis enim debitis mollitia earum laudantium ullam quidem, quam eos. Accusantium perferendis expedita nesciunt quidem pariatur voluptates earum dignissimos aliquam, fugiat eaque culpa ut deserunt vero voluptatibus. Porro, maiores corporis! Natus, at veritatis? Blanditiis, eum ducimus!</p>
-    <% posts.forEach(blog => { %>
+    <% blogs.forEach(blog => { %>
         <h2><%= blog.title %></h2>
-        <p><%= blog.content %></p>
+        <p><%= blog.content.substring(0, 100) + "..." %>
+        <a href="/blogs/<%= blog.title %>">Read More</a>
+    </p>
+        
     <% }) %>
-</div>
-<div class="container-fluid">
-    
 </div>
