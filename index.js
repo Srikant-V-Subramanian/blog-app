@@ -7,10 +7,15 @@ const bodyParser = require("body-parser")
 const Blog = require("./schema/Blog");
 
 
+
+
 mongoose.connect("mongodb://localhost/blogDB").then(function() {
     console.log("Connected to DB")
 }).catch(function(err) {
     console.log(err.message)
+    app.get("/", function(req, res) {
+        res.send("ERR!!")
+    })
 })
 
 app.use(bodyParser.urlencoded({ extended: false }))
@@ -21,6 +26,8 @@ app.use(express.static('public'))
 app.set("view engine", "ejs")
 
 app.get("/", function(req, res){
+    var lodash = require("lodash")
+    app.locals.lodash = lodash
     Blog.find({}, function(err, blogs) {
         res.render("home", {blogs: blogs})
     })
@@ -39,11 +46,21 @@ app.get("/compose", function(req, res){
     res.render("compose")
 })
 
-app.post("/compose", function(req, res){
+app.post("/compose",function(req, res){
+    Blog.exists({title: req.body.blogTitle}, function(err, doc) {
+        if (err) {
+            console.log(err)
+        } else {
+            throw new Error("TITLE HAS BEEN USED IN OTHER BLOGS.")
+        }
+    })
+
     const blog = new Blog ({
         title: req.body.blogTitle,
-        content: req.body.blogContent
+        content: req.body.blogContent,
+        url: _.kebabCase(req.body.blogTitle)
     })
+
 
     blog.save(function(err) {
         if (err) {
@@ -58,7 +75,7 @@ app.post("/compose", function(req, res){
 app.get("/blogs/:blogTitle", function(req, res) {
     const requestedBlogTitle = req.params.blogTitle
 
-    Blog.findOne({title: requestedBlogTitle}, function(err, blog) {
+    Blog.findOne({url: requestedBlogTitle}, function(err, blog) {
         res.render("blog", {title: blog.title, content: blog.content})
     })
 })

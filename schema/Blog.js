@@ -8,6 +8,10 @@ const blogSchema = mongoose.Schema({
     content: {
         type: String,
         requried: true
+    },
+    url: {
+        type: String,
+        requried: true
     }
 })
 
