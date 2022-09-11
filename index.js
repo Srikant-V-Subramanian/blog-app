@@ -51,7 +51,9 @@ app.post("/compose",function(req, res){
         if (err) {
             console.log(err)
         } else {
-            throw new Error("TITLE HAS BEEN USED IN OTHER BLOGS.")
+            if (doc!==null)  {
+                throw new Error("TITLE HAS BEEN USED.")
+            }
         }
     })
 
