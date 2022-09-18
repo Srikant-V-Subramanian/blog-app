@@ -8,7 +8,7 @@
             <div class="card-body">
                 <h2 class="card-title"><%= blog.title %></h2>
                 <p class="card-text"><%= blog.content.substring(0, 100) + "..." %>
-                <a href="/blogs/<%=lodash.kebabCase(blog.title) %>" class="btn btn-primary">Read More</a>
+                <a href="/blogs/<%=lodash.kebabCase(blog.user) %>/<%=lodash.kebabCase(blog.title) %>" class="btn btn-primary">Read More</a>
                 
             </p>
             <h5><%= blog.date %></h5>

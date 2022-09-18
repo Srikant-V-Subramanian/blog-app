@@ -1,0 +1,13 @@
+<%- include("partials/_header") %>
+<div class="container-fluid">
+    <h1>Sign Up</h1>
+    <form action="/signUp" class="form-group" method="post">
+        <label for="username">Username</label>
+        <input class="form-control" type="text" name="username" placeholder="Your Name">
+        <label for="userEmail">Email</label>
+        <input class="form-control" type="text" name="userEmail" placeholder="yourmail@example.com">
+        <label for="userPassword">Password</label>
+        <input class="form-control" type="password" name="userPassword">
+        <button class="btn btn-primary mt-2" type="submit">Submit</button>
+    </form>
+</div>
