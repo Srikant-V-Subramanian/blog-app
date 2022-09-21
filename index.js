@@ -11,7 +11,7 @@ const {scryptSync, randomBytes} = require("crypto")
 var username;
 
 
-mongoose.connect("mongodb://localhost/blogDB").then(function() {
+mongoose.connect("mongodb+srv://srikantsubramanian:%40Kittuin187@cluster0.qxavnzn.mongodb.net/blogDB").then(function() {
     console.log("Connected to DB")
 }).catch(function(err) {
     console.log(err.message)
