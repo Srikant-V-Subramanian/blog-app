@@ -2,18 +2,26 @@ const express = require("express")
 const bodyParser = require("body-parser")
 const lodash = require("lodash")
 const app = express()
+const marked = require("marked")
 const crypto = require("crypto")
+const fs = require("fs")
 
 let currentUser = "admin"
 let currentName = "Srikant Subramanian (admin)"
-let users = [{ 'username': 'admin', 'name': 'Srikant Subramanian (admin)' }]
-let blogs = [{ 'title': 'introduction', 'content': 'whatever', 'url': 'introduction', 'user': 'admin' }]
+let users = [{ 'username': 'admin', 'name': 'Srikant Subramanian (admin)', }]
+let blogs = [{ 'title': 'introduction', 'content': '***example text***\n__**example text**__', 'url': 'introduction', 'user': 'admin', 'preview': '~~* example text*~~' }]
 
 users.forEach((user) => {
     if (user.username === currentUser) {
         currentName = user.username
     }
 })
+
+
+app.locals.dynamicBlogPreview = (preview) => {
+    fs.writeFileSync('./views/pages/DynamicReqBlogPreview.ejs', '')
+    fs.writeFileSync('./views/pages/DynamicReqBlogPreview.ejs', marked.parse(preview))
+}
 
 // const hash = crypto.createHash('sha256').update('admin').digest('hex')
 
@@ -31,9 +39,12 @@ app.get("/sign-up", (req, res) => {
 
 
 
-app.get("/blogs/:blogTitle", (req, res) => {
+app.get("/:username/:blogTitle", (req, res) => {
     blogs.forEach((el) => {
-        if (el.url === req.params.blogTitle) {
+        if (el.url === req.params.blogTitle) { // && el.user === req.params.username
+            fs.writeFileSync('./views/pages/DynamicReqBlog.ejs', '')
+            fs.writeFileSync('./views/pages/DynamicReqBlog.ejs', marked.parse(el.content))
+
             res.render("./pages/Blog", {
                 title: el.title,
                 content: el.content,
@@ -45,12 +56,15 @@ app.get("/blogs/:blogTitle", (req, res) => {
 })
 
 app.get("/", (req, res) => {
+
+
     res.render("pages/home", {
         name: currentName,
         blogs: blogs,
         lodash: lodash,
         users: users,
-        currentUser: currentUser
+        currentUser: currentUser,
+        marked: marked,
     })
 })
 
@@ -59,18 +73,21 @@ app.get("/", (req, res) => {
 app.post("/", (req, res) => {
     var title = req.body.title;
     var content = req.body.content;
+    var preview = req.body.preview
 
     blogs.forEach((blog) => {
         if (blog.title == title) {
-            throw Error('BLOG WITH THE SAME TITLE EXISTS YOU DUMB B')
+            throw Error('BLOG WITH THE SAME TITLE EXISTS!')
         }
     })
     const blog = {
         "title": title.substring(0, 1).toUpperCase() + title.substring(1, title.length),
         "content": content,
         "url": lodash.kebabCase(title),
-        "user": currentUser
+        "user": currentUser,
+        "preview": preview
     }
+
     blogs.push(blog)
     res.redirect("/")
 })
