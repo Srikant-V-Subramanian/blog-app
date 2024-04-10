@@ -1,0 +1,51 @@
+<%- include('../partials/head.ejs') %>
+
+
+<div class="jumbotron jumbotron-fluid">
+    <div class="container">
+            <h1 class="display-3">I am <strong><%= lodash.upperCase(name) %></strong></h1>
+            <p class="lead">This application is built on Embedded JavaScript (EJS) and Express.js, with Node.js being the technology
+                of choice for
+                the backend.
+            </p>
+            <div class="container container-fluid">
+                <div class="row">
+                    <div class="col">
+                        <button class="btn btn-warning streched-link"><a href="/sign-in">SIGN IN</a></button>
+                    </div>
+                    <div class="col">
+                        <button class="btn btn-warning streched-link"><a href="/sign-up">SIGN UP</a></button>
+                    </div>
+                </div>
+            </div>
+    </div>
+</div>
+
+
+<%- include('./Form.ejs') %>
+
+<div class="jumbotron jumbotron-fluid">
+    <div class="container">
+        <h1 class="display-3">BLOGS
+        </h1>
+        <hr />
+        <% blogs.forEach(blog => { %>
+            <h3 class="display-4"><%= blog.title %></h3>
+            <% users.forEach(user => { %>
+                <% if (user.username === blog.user) { %>
+                    <p class="text-muted">By <strong><%= user.name %></strong></p>
+                <% } %>
+            <% }) %>
+            <% if (blog.content.length < 20){ %>
+                <p class="lead"><%= blog.content %></p>
+            <% } else { %>
+                <p class="lead"><%= blog.content.substring(0, 30) %>... <button class="btn btn-danger"><a href="blogs/<%= lodash.kebabCase(blog.title) %>">Read More</a></button></p>
+            <% } %>
+            <% if (blog.user==currentUser){ %>
+                <form action="/delete-request/<%=">
+                    <button class="btn btn-warning">DELETE</button>
+                </form>
+            <% } %>
+        <% }) %>
+    </div>
+</div>

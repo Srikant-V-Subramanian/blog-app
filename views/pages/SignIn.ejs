@@ -1,0 +1,26 @@
+<%- include('../partials/head.ejs') %>
+
+<div class="jumbotron jumbotron-fluid">
+    <div class="container-fluid">
+        <h1 class="display-4">SIGN IN</h1>
+        <form action="/sign-in" method="POST">
+            <div class="mb-3">
+                <label for="user_name" class="form-label">Username</label>
+                <input type="text" class="form-control" placeholder="Enter your username!"  name="user_name">
+            </div>
+            <div class="mb-3">
+                <label for="passowrd" class="form-label">Passowrd</label>
+                <input type="password" class="form-control" placeholder="Enter your password!"  name="password">
+            </div>
+            <div class="row">
+                <div class="col">
+                    <button type="submit" class="btn btn-danger">Submit</button>
+                </div>
+                <div class="col">
+                    <button class="btn btn-warning"><a href="/sign-up" class="link"
+                            style="color: white; text-decoration: none;">DONT HAVE AN ACCOUNT?</a></button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
