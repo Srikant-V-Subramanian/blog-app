@@ -42,10 +42,12 @@
                 <p class="lead"><%= blog.content.substring(0, 30) %>... <button class="btn btn-danger"><a href="blogs/<%= lodash.kebabCase(blog.title) %>">Read More</a></button></p>
             <% } %>
             <% if (blog.user==currentUser){ %>
-                <form action="/delete-request/<%=">
-                    <button class="btn btn-warning">DELETE</button>
+                <form action="/delete-request/<%= lodash.kebabCase(blog.user) %>/<%= blog.url %>" method="post">
+                    <button type="submit" class="btn btn-warning">DELETE</button>
                 </form>
             <% } %>
         <% }) %>
     </div>
 </div>
+
+

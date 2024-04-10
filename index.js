@@ -140,6 +140,21 @@ app.post('/sign-up', (req, res) => {
     res.redirect("/")
 })
 
+app.post('/delete-request/:username/:blogTitle', (req, res) => {
+    var username = req.params.username
+    var blogTitle = req.params.blogTitle
+    var index = 0
+
+    blogs.forEach((blog) => {
+        if (blog.url === blogTitle && blog.user == username) {
+            index = blogs.indexOf(blog)
+        }
+    })
+
+    blogs.splice(index, 1)
+    res.redirect("/")
+})
+
 app.listen(3030, () => {
     console.log("http://localhost:3030")
 })
