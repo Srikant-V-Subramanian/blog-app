@@ -39,7 +39,7 @@
             <% if (blog.content.length < 20){ %>
                 <p class="lead"><%= blog.content %></p>
             <% } else { %>
-                <p class="lead"><%= blog.content.substring(0, 30) %>... <button class="btn btn-danger"><a href="blogs/<%= lodash.kebabCase(blog.title) %>">Read More</a></button></p>
+                <p class="lead"><%= blog.content.substring(0, 200) %>... <button class="btn btn-danger"><a href="blogs/<%= lodash.kebabCase(blog.title) %>">Read More</a></button></p>
             <% } %>
             <% if (blog.user==currentUser){ %>
                 <form action="/delete-request/<%= lodash.kebabCase(blog.user) %>/<%= blog.url %>" method="post">

@@ -6,6 +6,13 @@
         <h1 class="display-3">
             <%= title %>
         </h1>
+        <% users.forEach(indiviualUserObject=> { %>
+            <% if (indiviualUserObject.username == user) { %>
+                <p class="text-muted">By <strong>
+                        <%= indiviualUserObject.name %>
+                    </strong></p>
+            <% } %>
+        <% }) %>
         <hr />
         <p class="lead">
             <%= content %>
